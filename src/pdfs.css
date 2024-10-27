@@ -1,0 +1,156 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    background: linear-gradient(270deg, #1a1a2e, #16213e, #0f3460, #533b72);
+    background-size: 1200% 1200%;
+    animation: gradientBG 10s ease infinite;
+    overflow: hidden;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: rgba(42, 45, 62, 0.9);
+    color: #fff;
+    padding-top: 20px;
+    position: sticky;
+    top: 0;
+    height: 100%;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+}
+
+.sidebar.hidden {
+    transform: translateX(-100%); /* Hide the sidebar */
+}
+
+.sidebar h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #ffab00;
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 15px;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.sidebar a:hover {
+    background-color: rgba(255, 171, 0, 0.5);
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.subject-list, .subtopic-list {
+    list-style-type: none;
+    margin-bottom: 20px;
+}
+
+.subject-list li, .subtopic-list li {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.subject-list li:hover, .subtopic-list li:hover {
+    background-color: rgba(255, 171, 0, 0.5);
+}
+
+.pdf-list {
+    list-style-type: none;
+    padding-left: 20px;
+    color: #fff;
+}
+
+.pdf-list li {
+    margin: 5px 0;
+}
+
+.pdf-list a {
+    color: #ffab00;
+    text-decoration: underline;
+}
+
+.pdf-list a:hover {
+    text-decoration: none;
+}
+
+h2 {
+    margin-top: 20px;
+}
+
+/* Hamburger button styles */
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    padding: 10px;
+    background: rgba(255, 171, 0, 0.9);
+    color: #fff;
+    border-radius: 5px;
+    width: 40px;
+    margin: 10px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10; /* Above the sidebar */
+}
+
+.line {
+    height: 4px;
+    background-color: white;
+    margin: 3px 0;
+    transition: transform 0.3s ease;
+}
+
+/* Media Query for Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%); /* Hide sidebar off-screen */
+    }
+    .sidebar.hidden {
+        transform: translateX(0); /* Show sidebar */
+    }
+    .hamburger {
+        display: flex; /* Show hamburger button */
+    }
+}

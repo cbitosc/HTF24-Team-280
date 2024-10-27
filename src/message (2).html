@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <style>
+        /* General Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Animated Background for the Dashboard */
+        body {
+            display: flex;
+            min-height: 100vh;
+            background: linear-gradient(270deg, #003366, #006699, #0099cc, #66ccff, #99ccff);
+            background-size: 1200% 1200%;
+            animation: gradientBG 10s ease infinite;
+            overflow: hidden; /* Hide body scrollbar */
+        }
+
+        /* Keyframes for Background Animation */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Layout of Main Container */
+        .container {
+            display: flex;
+            width: 100vw; /* Full width */
+            height: 100vh; /* Full height */
+            overflow-y: auto;
+            position: relative;
+            z-index: 1; /* Keeps content above background */
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            background-color: rgba(42, 45, 62, 0.9);
+            color: #fff;
+            padding-top: 20px;
+            position: sticky;
+            top: 0;
+            height: 100%;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+            transform: translateX(0); /* In-view by default */
+            transition: transform 0.3s ease;
+        }
+
+        /* Sidebar Hidden State (for Hamburger Toggle) */
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #ffab00;
+            margin-bottom: 20px;
+        }
+
+        /* Sidebar Links Styling */
+        .sidebar a {
+            display: block;
+            padding: 15px;
+            color: #ccc;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        /* Sidebar Link Hover Effect */
+        .sidebar a:hover {
+            background-color: rgba(255, 171, 0, 0.5);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Hamburger Menu for Sidebar Toggle */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            padding: 10px;
+            background: rgba(255, 171, 0, 0.9);
+            color: #fff;
+            border-radius: 5px;
+            width: 40px;
+            margin: 10px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 2;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover Effect on Hamburger */
+        .hamburger:hover {
+            background-color: rgba(0, 123, 255, 0.9);
+        }
+
+        .line {
+            height: 4px;
+            background-color: white;
+            margin: 3px 0;
+            transition: transform 0.3s ease;
+        }
+
+        /* Main Content Section Styling */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* Dashboard Box Styling */
+        .dashboard-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Welcome Banner Styling */
+        .welcome-banner {
+            background-color: rgba(255, 171, 0, 0.9);
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-banner h2 {
+            font-size: 1.8rem;
+        }
+
+        /* Section Boxes */
+        .section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* List Styling within Sections */
+        .section ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        /* Grid Layout for Dashboard Sections */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        /* Button Styling */
+        .btn {
+            padding: 10px 15px;
+            background-color: #2a2d3e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            background-color: #ffab00;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Attendance Progress Bar */
+        .progress-bar {
+            background: #e4e4e4;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .progress {
+            width: 75%;
+            background: orange;
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Hamburger for Sidebar Toggle -->
+        <div class="hamburger" onclick="toggleSidebar()">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+
+        <!-- Sidebar with Navigation Links -->
+        <div class="sidebar" id="sidebar">
+            <h2>Dashboard</h2>
+            <a href="#">Home</a>
+            <a href="#">Courses</a>
+            <a href="#">Assignments & Tests</a>
+            <a href="#">Grades & Feedback</a>
+            <a href="attendance.html">Attendance</a>
+            <a href="#">Calendar</a>
+            <a href="payments.html">Payments</a>
+            <a href="#">Profile Settings</a>
+        </div>
+
+        <!-- Main Dashboard Content -->
+        <div class="main-content">
+            <div class="dashboard-box">
+                <!-- Welcome Banner with Date -->
+                <div class="welcome-banner">
+                    <h2>Welcome, Samvith</h2>
+                    <p><span id="current-date"></span></p>
+                </div>
+
+                <!-- Dashboard Grid with Sections -->
+                <div class="dashboard-grid">
+                    <!-- Assignments Section -->
+                    <div class="section">
+                        <h3>Assignments Due Soon</h3>
+                        <ul id="assignments-list">
+                            <li>Assignment 1 - Due: Oct 28</li>
+                            <li>Assignment 2 - Due: Nov 3</li>
+                        </ul>
+                        <button class="btn">View All Assignments</button>
+                    </div>
+
+                    <!-- Progress Tracker Section -->
+                    <div class="section">
+                        <h3>Progress Tracker</h3>
+                        <p>Course Progress: 75%</p>
+                        <button class="btn">View Progress</button>
+                    </div>
+
+                    <!-- Attendance Tracker Section -->
+                    <div class="section">
+                        <h3>Attendance Tracker</h3>
+                        <p id="attendance-message"></p>
+                        <div class="progress-bar">
+                            <div class="progress" id="attendance-progress">75%</div>
+                        </div>
+                        <button class="btn">View Attendance Records</button>
+                    </div>
+
+                    <!-- Events Section -->
+                    <div class="section">
+                        <h3>Upcoming Events</h3>
+                        <ul>
+                            <li>Math Seminar - Nov 5</li>
+                        </ul>
+                        <button class="btn">View Calendar</button>
+                    </div>
+
+                    <!-- Messages Section -->
+                    <div class="section">
+                        <h3>Messages</h3>
+                        <ul>
+                            <li>Message from Prof. Smith</li>
+                            <li>Reminder: Project Submission</li>
+                        </ul>
+                        <button class="btn">View All Messages</button>
+                    </div>
+
+                    <!-- Announcements Section -->
+                    <div class="section">
+                        <h3>Announcements</h3>
+                        <ul>
+                            <li>Midterm results announced</li>
+                            <li>New course materials uploaded</li>
+                        </ul>
+                        <button class="btn">View All Announcements</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Display Current Date
+        document.getElementById("current-date").innerText = new Date().toLocaleDateString();
+
+        // Load Assignments Data
+        function loadAssignments() {
+            const assignments = [
+                { title: "Math Assignment", due: "Oct 28" },
+                { title: "History Project", due: "Nov 3" }
+            ];
+            const assignmentsList = document.getElementById("assignments-list");
+            assignmentsList.innerHTML = "";
+            assignments.forEach(assign => {
+                const li = document.createElement("li");
+                li.textContent = `${assign.title} - Due: ${assign.due}`;
+                assignmentsList.appendChild(li);
+            });
+        }
+
+        // Update Attendance Progress and Message
+        function updateAttendance(percentage) {
+            const attendanceMessage = document.getElementById("attendance-message");
+            const attendanceProgress = document.getElementById("attendance-progress");
+
+            attendanceProgress.style.width = percentage + "%";
+            attendanceProgress.innerText = percentage + "%";
+
+            if (percentage < 75) {
+                attendanceMessage.innerText = "Attendance is low.";
+            } else if (percentage === 75) {
+                attendanceMessage.innerText = "Attendance is fine but has to be increased.";
+            } else {
+                attendanceMessage.innerText = "Your attendance is adequate.";
+            }
+        }
+
+        // Toggle Sidebar Visibility
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("hidden");
+        }
+
+        // Initialize Assignments and Attendance Data
+        loadAssignments();
+        updateAttendance(75);
+    </script>
+</body>
+</html>
