@@ -1,0 +1,239 @@
+/* Reset for box sizing, margin, padding, and font */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Body with animated gradient background */
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background: linear-gradient(270deg, #1a1a2e, #16213e, #0f3460, #533b72);
+    background-size: 1200% 1200%;
+    animation: gradientBG 10s ease infinite;
+}
+
+/* Background animation keyframes */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Main layout container settings */
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 250px;
+    background-color: rgba(42, 45, 62, 0.9);
+    color: #fff;
+    padding-top: 20px;
+    position: fixed;
+    height: 100%;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+/* Hidden state for sidebar (for toggle effect) */
+.sidebar.hidden {
+    transform: translateX(-100%);
+}
+
+/* Sidebar header */
+.sidebar h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #ffab00;
+    margin-bottom: 20px;
+}
+
+/* Sidebar links styling */
+.sidebar a {
+    display: block;
+    padding: 15px;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    text-align: center;
+    border-radius: 5px;
+}
+
+/* Sidebar link hover effect */
+.sidebar a:hover {
+    background-color: rgba(255, 171, 0, 0.5);
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Hamburger menu styling for sidebar toggle */
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    cursor: pointer;
+    padding: 10px;
+    background: rgba(255, 171, 0, 0.9);
+    color: #fff;
+    border-radius: 5px;
+    width: 40px;
+    margin: 10px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+}
+
+/* Hover effect for hamburger menu */
+.hamburger:hover {
+    background-color: rgba(0, 123, 255, 0.9);
+}
+
+/* Hamburger menu line styling */
+.line {
+    height: 4px;
+    background-color: white;
+    margin: 3px 0;
+    transition: transform 0.3s ease;
+}
+
+/* Main content styling, offset by sidebar width */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 250px;
+    overflow-y: auto;
+}
+
+/* Payments container styling for central display */
+.payments-container {
+    width: 80vw;
+    max-width: 800px;
+    margin: auto;
+    padding: 30px;
+    background-color: rgba(42, 45, 62, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Heading style for Payments container */
+.payments-container h1 {
+    color: #ffab00;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+/* Common styling for sections in payments container */
+.payment-options,
+.payment-form,
+.transaction-status {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Headers in each payment section */
+.payment-options h2,
+.payment-form h3,
+.transaction-status h2 {
+    color: #ffab00;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+/* Styling for select and buttons */
+.payment-options select,
+.payment-form button,
+.transaction-status input,
+.transaction-status button {
+    padding: 12px 18px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Styling for select dropdown */
+.payment-options select {
+    width: 100%;
+    background: #ffffff;
+    color: #003366;
+    border: 1px solid #003366;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+/* Button in the payment form */
+.payment-form button {
+    background: #ffab00;
+    color: #ffffff;
+    margin-top: 15px;
+}
+
+/* Styling for payment method section */
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    display: none; /* Initially hidden */
+}
+
+/* Buttons for selecting payment method */
+.method-buttons button {
+    background: #003366;
+    color: #ffffff;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+    width: 180px;
+}
+
+/* Input for transaction status */
+.transaction-status input {
+    width: 100%;
+    padding: 10px;
+    margin: 15px 0;
+    background: #ffffff;
+    color: #003366;
+    border: 1px solid #003366;
+    border-radius: 5px;
+}
+
+/* Button for checking transaction status */
+.transaction-status button {
+    background: #ffab00;
+    color: white;
+    width: 100%;
+}
+
+/* Transaction status message */
+.transaction-status p {
+    margin-top: 10px;
+    color: white;
+    background: rgba(0, 51, 102, 0.9);
+    padding: 10px;
+    border-radius: 8px;
+}
